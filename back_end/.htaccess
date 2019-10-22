@@ -1,0 +1,63 @@
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+AddDefaultCharset UTF-8
+RewriteEngine On
+Options +FollowSymlinks
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} ^(.*?)/?$
+    RewriteCond %{DOCUMENT_ROOT}/%1.php -f
+    RewriteRule ^(.*?)/?$ $1.php
+	#ErrorDocument 400 /error/erro404.php
+	#ErrorDocument 401 /error/erro404.php
+    ErrorDocument 403 /error/erro404.php
+	ErrorDocument 404 /error/erro404.php
+	#ErrorDocument 500 /error/erro404.php
+
+<FilesMatch "\.(?i:mp4)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+
+<FilesMatch "\.(?i:mp3)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+
+<FilesMatch "\.(?i:mpg)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+
+<FilesMatch "\.(?i:mov)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+
+<FilesMatch "\.(?i:flv)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+
+<FilesMatch "\.(htm|html|css|js|php)$">
+AddDefaultCharset UTF-8
+</FilesMatch>
+
+<FilesMatch "\.(css|flv|htm|html|jpe|jpeg|jpg|js|mp3|mp4|png|pdf|swf|txt)$">
+	<IfModule mod_expires.c>
+		ExpiresActive Off
+	</IfModule>
+	<IfModule mod_headers.c>
+		FileETag None
+		Header unset ETag
+		Header unset Pragma
+		Header unset Cache-Control
+		Header unset Last-Modified
+		Header set Pragma "no-cache"
+		Header set Cache-Control "max-age=0, post-check=0, pre-check=0, no-cache, no-store, must-revalidate"
+		Header set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
+	</IfModule>
+</FilesMatch>
